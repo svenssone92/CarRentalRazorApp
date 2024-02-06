@@ -1,0 +1,21 @@
+﻿@page
+@model CarRentalRazor.Pages.UserManager.ProfileModel
+@{
+    ViewData["Title"] = "Profile page";
+}
+
+<div>
+    @if (@UserManager.ActiveUser.customer != null)
+    {
+        <p>Name: @UserManager.ActiveUser.customer.FirstName @UserManager.ActiveUser.customer.LastName</p>
+        <p>E-mail: @UserManager.ActiveUser.customer.Email</p>
+        <p><a asp-page="./EditProfile" asp-route-id="@UserManager.ActiveUser.customer.Id">Edit</a></p>
+    }
+
+    <p><a asp-page="./ReservationList">My Reservations</a></p>
+
+
+    <form method="post" asp-page-handler="SignOut">
+        <button type="submit" class="btn btn-link nav-link text-dark">Sign Out</button>
+    </form>
+</div>

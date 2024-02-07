@@ -20,3 +20,289 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+:root {
+    --bg-color: #e8dbd6;
+
+    --blue1: #d6dfe1;
+    --blue2: #bfd1d4;
+    --blue3: #648890;
+    --blue4: #4d666b;
+    --blue5: #1d2729;
+
+    --orange1: #a4664b;
+    --orange2: #dd5921;
+    --orange3: #72361c;
+    --orange4: #3e1c0e;
+
+    --green1: #c3dbc6;
+    --green2: #8fb590;
+    --green3: #456549;
+    --green4: #1a6d25;
+
+    --red1: #cb9896;
+    --red2: #BD5E5A;
+    --red3: #612522;
+}
+
+header {
+    padding: 1px;
+    background-color: var(--blue4);
+}
+
+header h1 {
+    text-align: center;
+    color: white;
+    margin-bottom: 5px;
+}
+
+body {
+    margin: 0;
+    background-color: var(--bg-color);
+    font-family: 'Open Sans', sans-serif;
+}
+
+section {
+    margin: auto;
+    max-width: 1000px;
+    padding: 10px;
+    margin-top: 30px;
+    padding-bottom: 30px;
+    border: 2px solid var(--orange4);
+    background-color: var(--blue1);
+}
+
+nav {
+    margin-bottom: 30px;
+    padding: 10px;
+    width: 100%;
+    background-color: var(--blue4);
+    text-align: center;
+    border-bottom: 2px solid var(--orange4);
+    box-sizing: border-box;
+}
+
+nav ul {
+    margin: 0;
+    list-style-type: none;
+    padding: 0;
+    overflow: hidden;
+    padding: 3px;
+}
+
+nav li {
+    display: inline-block;
+}
+
+nav li a {
+    display: block;
+    text-decoration: none;
+    color: var(--blue5);
+    background-color: white;
+    border: 2px solid var(--orange4);
+    border-radius: 2px;
+    margin: 2px;
+    padding: 10px;
+}
+
+nav li a:hover {
+    color: var(--bg-color);
+    background-color: var(--orange4);
+}
+
+h1 {
+    color: var(--orange4);
+    font-family: 'Press Start 2P', system-ui;
+}
+
+h2 {
+    color: var(--orange4);
+}
+
+h3 {
+    color: var(--orange4);
+}
+
+h4 {
+    color: var(--orange4);
+}
+
+p {
+    color: var(--blue5);
+}
+
+.button {
+    height: 32px;
+    font-size: 25px;
+    line-height: 20px;
+    border: 2px solid var(--orange4);
+    vertical-align: middle;
+    color: white;
+    border-radius: 2px;
+}
+
+button.normal {
+    background-color: var(--orange1);
+}
+
+    button.normal:hover {
+        background-color: var(--orange3);
+    }
+
+button.positive {
+    background-color: var(--green2);
+}
+
+    button.positive:hover {
+        background-color: var(--green4);
+    }
+
+button.negative {
+    background-color: var(--red2);
+    ;
+}
+
+    button.negative:hover {
+        background-color: var(--red3);
+        ;
+    }
+
+.print-button {
+    background-image: url('Images/PrintButton.png');
+    background-size: cover;
+    width: 32px;
+    height: 32px;
+    border: none;
+    vertical-align: middle;
+}
+
+    .print-button:hover {
+        background-image: url('Images/PrintButtonHover.png');
+    }
+
+.table {
+    border-collapse: collapse;
+    text-align: center;
+    border: 2px solid var(--orange4);
+}
+
+
+    .table thead {
+        border-bottom: 1px solid var(--blue4);
+    }
+
+    .table th {
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 7px;
+        padding-bottom: 7px;
+        background-color: white;
+    }
+
+    .table td {
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
+    .table.long td:nth-child(even) {
+        background-color: var(--blue1);
+    }
+
+    .table.long td:nth-child(odd) {
+        background-color: white;
+    }
+
+    .table.wide tr:nth-child(even) {
+        background-color: white;
+    }
+
+    .table.wide tr:nth-child(odd) {
+        background-color: var(--blue1);
+    }
+
+.normal-message {
+    background-color: var(--blue2);
+    color: var(--blue5);
+}
+
+.success-message {
+    background-color: var(--green1);
+    color: var(--green4);
+}
+
+.error-message {
+    background-color: var(--orange2);
+    color: var(--orange4);
+}
+
+.warning-message {
+    background-color: var(--red1);
+    color: var(--red3);
+}
+
+.panel {
+    border-radius: 2px;
+    margin-top: 10px;
+    border: solid var(--orange4);
+}
+
+.panel h4 {
+    margin: 5px;
+}
+
+.panel p {
+    background-color: white;
+    padding: 10px;
+    margin-bottom: 0;
+}
+
+.panel.positive {
+    background-color: var(--green1);
+    color: var(--green4);
+}
+
+.panel.neutral {
+    background-color: var(--blue3);
+    color: var(--blue5);
+}
+
+.panel.negative {
+    background-color: var(--red1);
+    color: var(--red3);
+}
+
+input.textfield {
+    height: 30px;
+    width: 50%;
+    margin-bottom: 10px;
+    border: 2px solid var(--orange4);
+    border-radius: 2px;
+}
+
+label {
+    color: var(--blue5);
+    margin-bottom: 5px;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+footer {
+    margin-top: 30px;
+    width: 100%;
+    background-color: var(--blue4);
+    color: var(--bg-color);
+    border-top: 2px solid var(--orange4);
+}
+
+footer h3 {
+    text-align: center;
+    color: white;
+    margin: 10px;
+}

@@ -4,11 +4,14 @@
     ViewData["Title"] = "Admin Profile";
 }
 <div>
+    <section id="Admin info">
+        <p>Name: @HttpContext.Session.GetString("AdminFirstName") @HttpContext.Session.GetString("AdminLastName")</p>
+        <p>E-mail: @HttpContext.Session.GetString("AdminEmail")</p>
+    </section>
 
-    <p>Name: @HttpContext.Session.GetString("AdminFirstName") @HttpContext.Session.GetString("AdminLastName")</p>
-    <p>E-mail: @HttpContext.Session.GetString("AdminEmail")</p>
-
-    <form method="post" asp-page-handler="SignOut">
-        <button type="submit" class="btn btn-link nav-link text-dark">Sign Out</button>
-    </form>
+    <section>
+        <form method="post" asp-page-handler="SignOut">
+            <button type="submit" class="btn btn-link nav-link text-dark">Sign Out</button>
+        </form>
+    </section>
 </div>

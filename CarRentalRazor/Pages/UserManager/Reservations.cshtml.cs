@@ -63,7 +63,7 @@ namespace CarRentalRazor.Pages.UserManager
             }
 
             reservationRepository.Add(Reservation);
-            return RedirectToPage("./Profile");
+            return RedirectToPage("./ReservationConfirm", Reservation);
         }
     }
 }

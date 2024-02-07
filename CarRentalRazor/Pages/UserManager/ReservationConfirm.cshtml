@@ -1,0 +1,27 @@
+﻿@page
+@model CarRentalRazor.Pages.UserManager.ReservationConfirmModel
+@{
+}
+<div class="success-message">Success! Your Reservation is made.</div>
+<section>
+<dl class="row">
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Reservation.Car)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Reservation.CarId)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Reservation.StartDate)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Reservation.StartDate)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Reservation.EndDate)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Reservation.EndDate)
+    </dd>
+</dl>
+</section>

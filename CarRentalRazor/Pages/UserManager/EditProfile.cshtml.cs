@@ -13,24 +13,24 @@ namespace CarRentalRazor.Pages.UserManager
 {
     public class EditModel : PageModel
     {
-        private readonly CarRentalRazor.Data.ApplicationDbContext _context;
+        private readonly ICustomer customerRepository;
 
-        public EditModel(CarRentalRazor.Data.ApplicationDbContext context)
+        public EditModel(ICustomer customerRepository)
         {
-            _context = context;
+            this.customerRepository = customerRepository;
         }
 
         [BindProperty]
         public Customer Customer { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null || _context.Customers == null)
+            if (customerRepository == null)
             {
                 return NotFound();
             }
 
-            var customer =  await _context.Customers.FirstOrDefaultAsync(m => m.Id == id);
+            var customer = customerRepository.GetById(id);
             if (customer == null)
             {
                 return NotFound();
@@ -49,30 +49,9 @@ namespace CarRentalRazor.Pages.UserManager
                 return Page();
             }
 
-            _context.Attach(Customer).State = EntityState.Modified;
+            customerRepository.Update(Customer);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CustomerExists(Customer.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return RedirectToPage("./Index");
-        }
-
-        private bool CustomerExists(int id)
-        {
-          return (_context.Customers?.Any(e => e.Id == id)).GetValueOrDefault();
+            return RedirectToPage("./Profile");
         }
     }
 }

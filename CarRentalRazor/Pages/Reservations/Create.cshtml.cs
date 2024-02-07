@@ -12,17 +12,21 @@ namespace CarRentalRazor.Pages.Reservations
 {
     public class CreateModel : PageModel
     {
-        private readonly CarRentalRazor.Data.ApplicationDbContext _context;
+        private readonly ICar carRepository;
+        private readonly ICustomer customerRepository;
+        private readonly IReservation reservationRepository;
 
-        public CreateModel(CarRentalRazor.Data.ApplicationDbContext context)
+        public CreateModel(ICar carRepository, ICustomer customerRepository, IReservation reservationRepository)
         {
-            _context = context;
+            this.carRepository = carRepository;
+            this.customerRepository = customerRepository;
+            this.reservationRepository = reservationRepository;
         }
 
         public IActionResult OnGet()
         {
-        ViewData["CarId"] = new SelectList(_context.Cars, "Id", "Id");
-        ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Id");
+            ViewData["CarId"] = new SelectList(carRepository.GetAll(), "Id", "Id");
+            ViewData["CustomerId"] = new SelectList(customerRepository.GetAll(), "Id", "Id");
             return Page();
         }
 
@@ -35,13 +39,13 @@ namespace CarRentalRazor.Pages.Reservations
         {
             ModelState.Remove("Reservation.Car");
             ModelState.Remove("Reservation.Customer");
-            if (!ModelState.IsValid || _context.Reservations == null || Reservation == null)
+            if (!ModelState.IsValid || reservationRepository == null || Reservation == null)
             {
                 return Page();
             }
 
-            _context.Reservations.Add(Reservation);
-            await _context.SaveChangesAsync();
+            reservationRepository.Add(Reservation);
+
 
             return RedirectToPage("./Index");
         }

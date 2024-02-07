@@ -11,6 +11,18 @@ namespace CarRentalRazor.Data
             this.applicationDbContext = applicationDbContext;
         }
 
+        public void Add(Car car)
+        {
+            applicationDbContext.Cars.Add(car);
+            applicationDbContext.SaveChanges();
+        }
+
+        public void Delete(Car car)
+        {
+            applicationDbContext.Cars.Remove(car);
+            applicationDbContext.SaveChanges();
+        }
+
         public IEnumerable<Car> GetAll()
         {
             return applicationDbContext.Cars.OrderBy(x => x.Id);
@@ -19,6 +31,12 @@ namespace CarRentalRazor.Data
         public Car GetById(int id)
         {
             return applicationDbContext.Cars.FirstOrDefault(x => x.Id == id);
+        }
+
+        public void Update(Car car)
+        {
+            applicationDbContext.Update(car);
+            applicationDbContext.SaveChanges();
         }
     }
 }

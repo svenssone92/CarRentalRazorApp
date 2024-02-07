@@ -12,25 +12,25 @@ namespace CarRentalRazor.Pages.UserManager
 {
     public class ReservationListModel : PageModel
     {
-        private readonly CarRentalRazor.Data.ApplicationDbContext _context;
+        private readonly IReservation reservationRepository;
 
-        public ReservationListModel(CarRentalRazor.Data.ApplicationDbContext context)
+        public ReservationListModel(IReservation reservationRepository)
         {
-            _context = context;
+            this.reservationRepository = reservationRepository;
         }
 
         public IList<Reservation> Reservation { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            if (_context.Reservations != null)
+            if (reservationRepository != null)
             {
-                Reservation = await _context.Reservations
-                .Where(r => r.CustomerId == ActiveUser.customer.Id)
+                Reservation = reservationRepository.GetAll()
+                .Where(r => r.CustomerId == HttpContext.Session.GetInt32("CustomerId"))
                 .Include(r => r.Car)
                 .Include(r => r.Customer)
                 .OrderBy(r => r.StartDate)
-                .ToListAsync();
+                .ToList();
             }
         }
     }

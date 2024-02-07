@@ -1,0 +1,14 @@
+﻿@page
+@model CarRentalRazor.Pages.AdminManager.ProfileModel
+@{
+    ViewData["Title"] = "Admin Profile";
+}
+<div>
+
+    <p>Name: @HttpContext.Session.GetString("AdminFirstName") @HttpContext.Session.GetString("AdminLastName")</p>
+    <p>E-mail: @HttpContext.Session.GetString("AdminEmail")</p>
+
+    <form method="post" asp-page-handler="SignOut">
+        <button type="submit" class="btn btn-link nav-link text-dark">Sign Out</button>
+    </form>
+</div>

@@ -13,24 +13,26 @@ namespace CarRentalRazor.Pages.UserManager
 {
     public class ReservationsModel : PageModel
     {
-        private readonly CarRentalRazor.Data.ApplicationDbContext _context;
+        private readonly ICar carRepository;
+        private readonly IReservation reservationRepository;
 
-        public ReservationsModel(CarRentalRazor.Data.ApplicationDbContext context)
+        public ReservationsModel(ICar carRepository, ICustomer customerRepository, IReservation reservationRepository)
         {
-            _context = context;
+            this.carRepository = carRepository;
+            this.reservationRepository = reservationRepository;
         }
 
         [BindProperty]
         public Car Car { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null || _context.Cars == null)
+            if (carRepository.GetAll() == null)
             {
                 return NotFound();
             }
 
-            var car = await _context.Cars.FirstOrDefaultAsync(m => m.Id == id);
+            var car = carRepository.GetById(id);
             if (car == null)
             {
                 return NotFound();
@@ -47,26 +49,20 @@ namespace CarRentalRazor.Pages.UserManager
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-            //Removes unwanted properties for Vaildation
+            //Removes navigation properties for Vaildation
             ModelState.Remove("Reservation.Car");
             ModelState.Remove("Reservation.Customer");
 
-            ModelState.Remove("Car.Model");
-            ModelState.Remove("Car.Reservations");
-            ModelState.Remove("Car.PictureString");
+            // Set CarId and CustomerId for Reservation
+            Reservation.CarId = Car.Id;
+            Reservation.CustomerId = (int)HttpContext.Session.GetInt32("CustomerId");
 
-            if (!ModelState.IsValid || _context.Reservations == null || Reservation == null || ActiveUser.customer == null)
+            if (!ModelState.IsValid || reservationRepository.GetAll() == null || Reservation == null || HttpContext.Session.GetInt32("CustomerId") == null)
             {
                 return Page();
             }
 
-            // Set CarId and CustomerId for Reservation
-            Reservation.CarId = Car.Id;
-            Reservation.CustomerId = ActiveUser.customer.Id;
-
-            _context.Reservations.Add(Reservation);
-            await _context.SaveChangesAsync();
-
+            reservationRepository.Add(Reservation);
             return RedirectToPage("./Profile");
         }
     }

@@ -14,15 +14,20 @@ namespace CarRentalRazor.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-        modelBuilder.Entity<Reservation>()
-            .HasOne(r => r.Customer)
-            .WithMany(c => c.Reservations)
-            .HasForeignKey(r => r.CustomerId);
+            modelBuilder.Entity<Reservation>()
+                .HasOne(r => r.Customer)
+                .WithMany(c => c.Reservations)
+                .HasForeignKey(r => r.CustomerId);
 
-        modelBuilder.Entity<Reservation>()
-            .HasOne(r => r.Car)
-            .WithMany(c => c.Reservations)
-            .HasForeignKey(r => r.CarId);
+            modelBuilder.Entity<Reservation>()
+                .HasOne(r => r.Car)
+                .WithMany(c => c.Reservations)
+                .HasForeignKey(r => r.CarId);
+
+            modelBuilder.Entity<Car>()
+            .Property(c => c.Price)
+            .HasColumnType("decimal(18,2)");
+
         }
     }
 }

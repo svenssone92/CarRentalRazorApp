@@ -14,11 +14,11 @@ namespace CarRentalRazor.Pages.AdminManager
 {
     public class AdminSignInModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IAdmin adminRepository;
 
-        public AdminSignInModel(ApplicationDbContext context)
+        public AdminSignInModel(IAdmin adminRepository)
         {
-            _context = context;
+            this.adminRepository = adminRepository;
         }
 
         [BindProperty]
@@ -33,13 +33,14 @@ namespace CarRentalRazor.Pages.AdminManager
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync(Admin admin)
         {
-            var admins = _context.Admins;
+            var admins = adminRepository.GetAll();
 
             var matchingAdmin = admins.FirstOrDefault(a => a.Email == admin.Email);
 
             if (matchingAdmin != null && matchingAdmin.Password == admin.Password)
             {
-                ActiveAdmin.admin = matchingAdmin;
+                SessionControl.RemoveCustomerData(HttpContext.Session);
+                SessionControl.SetAdminData(HttpContext.Session, matchingAdmin);
 
                 return RedirectToPage("../Index");
             }

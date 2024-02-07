@@ -12,23 +12,23 @@ namespace CarRentalRazor.Pages.Admins
 {
     public class DetailsModel : PageModel
     {
-        private readonly CarRentalRazor.Data.ApplicationDbContext _context;
+        private readonly IAdmin adminRepository;
 
-        public DetailsModel(CarRentalRazor.Data.ApplicationDbContext context)
+        public DetailsModel(IAdmin adminRepository)
         {
-            _context = context;
+            this.adminRepository = adminRepository;
         }
 
-      public Admin Admin { get; set; } = default!; 
+        public Admin Admin { get; set; } = default!; 
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null || _context.Admins == null)
+            if (adminRepository == null)
             {
                 return NotFound();
             }
 
-            var admin = await _context.Admins.FirstOrDefaultAsync(m => m.Id == id);
+            var admin = adminRepository.GetById(id);
             if (admin == null)
             {
                 return NotFound();

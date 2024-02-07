@@ -12,24 +12,24 @@ namespace CarRentalRazor.Pages.Reservations
 {
     public class DeleteModel : PageModel
     {
-        private readonly CarRentalRazor.Data.ApplicationDbContext _context;
+        private readonly IReservation reservationRepository;
 
-        public DeleteModel(CarRentalRazor.Data.ApplicationDbContext context)
+        public DeleteModel(IReservation reservationRepository)
         {
-            _context = context;
+            this.reservationRepository = reservationRepository;
         }
 
         [BindProperty]
       public Reservation Reservation { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null || _context.Reservations == null)
+            if (reservationRepository == null)
             {
                 return NotFound();
             }
 
-            var reservation = await _context.Reservations.FirstOrDefaultAsync(m => m.Id == id);
+            var reservation = reservationRepository.GetById(id);
 
             if (reservation == null)
             {
@@ -42,19 +42,18 @@ namespace CarRentalRazor.Pages.Reservations
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(int id)
         {
-            if (id == null || _context.Reservations == null)
+            if (reservationRepository == null)
             {
                 return NotFound();
             }
-            var reservation = await _context.Reservations.FindAsync(id);
+            var reservation = reservationRepository.GetById(id);
 
             if (reservation != null)
             {
                 Reservation = reservation;
-                _context.Reservations.Remove(Reservation);
-                await _context.SaveChangesAsync();
+                reservationRepository.Delete(Reservation);
             }
 
             return RedirectToPage("./Index");

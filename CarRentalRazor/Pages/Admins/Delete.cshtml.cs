@@ -12,24 +12,24 @@ namespace CarRentalRazor.Pages.Admins
 {
     public class DeleteModel : PageModel
     {
-        private readonly CarRentalRazor.Data.ApplicationDbContext _context;
+        private readonly IAdmin adminRepository;
 
-        public DeleteModel(CarRentalRazor.Data.ApplicationDbContext context)
+        public DeleteModel(IAdmin adminRepository)
         {
-            _context = context;
+            this.adminRepository = adminRepository;
         }
 
         [BindProperty]
       public Admin Admin { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null || _context.Admins == null)
+            if (adminRepository == null)
             {
                 return NotFound();
             }
 
-            var admin = await _context.Admins.FirstOrDefaultAsync(m => m.Id == id);
+            var admin = adminRepository.GetById(id);
 
             if (admin == null)
             {
@@ -42,19 +42,18 @@ namespace CarRentalRazor.Pages.Admins
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(int id)
         {
-            if (id == null || _context.Admins == null)
+            if (adminRepository == null)
             {
                 return NotFound();
             }
-            var admin = await _context.Admins.FindAsync(id);
+            var admin = adminRepository.GetById(id);
 
             if (admin != null)
             {
                 Admin = admin;
-                _context.Admins.Remove(Admin);
-                await _context.SaveChangesAsync();
+                adminRepository.Delete(Admin);
             }
 
             return RedirectToPage("./Index");

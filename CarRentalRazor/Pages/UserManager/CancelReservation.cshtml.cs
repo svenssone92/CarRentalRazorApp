@@ -12,11 +12,13 @@ namespace CarRentalRazor.Pages.UserManager
 {
     public class CancelReservationModel : PageModel
     {
-        private readonly CarRentalRazor.Data.ApplicationDbContext _context;
+        private readonly ICar carRepository;
+        private readonly IReservation reservationRepository;
 
-        public CancelReservationModel(CarRentalRazor.Data.ApplicationDbContext context)
+        public CancelReservationModel(ICar carRepository, IReservation reservationRepository)
         {
-            _context = context;
+            this.carRepository = carRepository;
+            this.reservationRepository = reservationRepository;
         }
 
         [BindProperty]
@@ -24,15 +26,15 @@ namespace CarRentalRazor.Pages.UserManager
         [BindProperty]
         public Car Car { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null || _context.Reservations == null)
+            if (reservationRepository == null)
             {
                 return NotFound();
             }
 
-            var reservation = await _context.Reservations.FirstOrDefaultAsync(m => m.Id == id);
-            var car = await _context.Cars.FirstOrDefaultAsync(m => m.Id == reservation.CarId);
+            var reservation = reservationRepository.GetById(id);
+            var car = carRepository.GetById(reservation.CarId);
 
             if (reservation == null || car == null)
             {
@@ -46,19 +48,19 @@ namespace CarRentalRazor.Pages.UserManager
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(int id)
         {
-            if (id == null || _context.Reservations == null)
+            if (reservationRepository == null)
             {
                 return NotFound();
             }
-            var reservation = await _context.Reservations.FindAsync(id);
+            var reservation = reservationRepository.GetById(id);
 
             if (reservation != null)
             {
                 Reservation = reservation;
-                _context.Reservations.Remove(Reservation);
-                await _context.SaveChangesAsync();
+                reservationRepository.Delete(Reservation);
+
             }
 
             return RedirectToPage("./ReservationList");

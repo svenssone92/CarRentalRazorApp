@@ -13,24 +13,24 @@ namespace CarRentalRazor.Pages.Cars
 {
     public class EditModel : PageModel
     {
-        private readonly CarRentalRazor.Data.ApplicationDbContext _context;
+        private readonly ICar carRepository;
 
-        public EditModel(CarRentalRazor.Data.ApplicationDbContext context)
+        public EditModel(ICar carRepository)
         {
-            _context = context;
+            this.carRepository = carRepository;
         }
 
         [BindProperty]
         public Car Car { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null || _context.Cars == null)
+            if (carRepository == null)
             {
                 return NotFound();
             }
 
-            var car =  await _context.Cars.FirstOrDefaultAsync(m => m.Id == id);
+            var car = carRepository.GetById(id);
             if (car == null)
             {
                 return NotFound();
@@ -49,30 +49,9 @@ namespace CarRentalRazor.Pages.Cars
                 return Page();
             }
 
-            _context.Attach(Car).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CarExists(Car.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            carRepository.Update(Car);
 
             return RedirectToPage("./Index");
-        }
-
-        private bool CarExists(int id)
-        {
-          return (_context.Cars?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

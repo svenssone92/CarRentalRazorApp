@@ -12,23 +12,23 @@ namespace CarRentalRazor.Pages.Customers
 {
     public class DetailsModel : PageModel
     {
-        private readonly CarRentalRazor.Data.ApplicationDbContext _context;
+        private readonly ICustomer customerRepository;
 
-        public DetailsModel(CarRentalRazor.Data.ApplicationDbContext context)
+        public DetailsModel(ICustomer customerRepository)
         {
-            _context = context;
+            this.customerRepository = customerRepository;
         }
 
-      public Customer Customer { get; set; } = default!; 
+        public Customer Customer { get; set; } = default!; 
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null || _context.Customers == null)
+            if (customerRepository == null)
             {
                 return NotFound();
             }
 
-            var customer = await _context.Customers.FirstOrDefaultAsync(m => m.Id == id);
+            var customer = customerRepository.GetById(id);
             if (customer == null)
             {
                 return NotFound();

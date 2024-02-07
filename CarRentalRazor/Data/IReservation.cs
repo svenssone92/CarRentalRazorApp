@@ -6,6 +6,10 @@ namespace CarRentalRazor.Data
     {
         Reservation GetById(int id);
 
-        IEnumerable<Reservation> GetAll();
+        IQueryable<Reservation> GetAll();
+
+        void Add(Reservation reservation);
+        void Update(Reservation reservation);
+        void Delete(Reservation reservation);
     }
 }

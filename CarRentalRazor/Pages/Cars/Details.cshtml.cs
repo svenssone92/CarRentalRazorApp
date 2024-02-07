@@ -12,23 +12,23 @@ namespace CarRentalRazor.Pages.Cars
 {
     public class DetailsModel : PageModel
     {
-        private readonly CarRentalRazor.Data.ApplicationDbContext _context;
+        private readonly ICar carRepository;
 
-        public DetailsModel(CarRentalRazor.Data.ApplicationDbContext context)
+        public DetailsModel(ICar carRepository)
         {
-            _context = context;
+            this.carRepository = carRepository;
         }
 
-      public Car Car { get; set; } = default!; 
+        public Car Car { get; set; } = default!; 
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null || _context.Cars == null)
+            if (carRepository == null)
             {
                 return NotFound();
             }
 
-            var car = await _context.Cars.FirstOrDefaultAsync(m => m.Id == id);
+            var car = carRepository.GetById(id);
             if (car == null)
             {
                 return NotFound();

@@ -12,20 +12,20 @@ namespace CarRentalRazor.Pages.Admins
 {
     public class IndexModel : PageModel
     {
-        private readonly CarRentalRazor.Data.ApplicationDbContext _context;
+        private readonly IAdmin adminRepository;
 
-        public IndexModel(CarRentalRazor.Data.ApplicationDbContext context)
+        public IndexModel(IAdmin adminRepository)
         {
-            _context = context;
+            this.adminRepository = adminRepository;
         }
 
-        public IList<Admin> Admin { get;set; } = default!;
+        public IEnumerable<Admin> Admin { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            if (_context.Admins != null)
+            if (adminRepository != null)
             {
-                Admin = await _context.Admins.ToListAsync();
+                Admin = adminRepository.GetAll();
             }
         }
     }

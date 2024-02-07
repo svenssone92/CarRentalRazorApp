@@ -12,11 +12,11 @@ namespace CarRentalRazor.Pages.Admins
 {
     public class CreateModel : PageModel
     {
-        private readonly CarRentalRazor.Data.ApplicationDbContext _context;
+        private readonly IAdmin adminRepository;
 
-        public CreateModel(CarRentalRazor.Data.ApplicationDbContext context)
+        public CreateModel(IAdmin adminRepository)
         {
-            _context = context;
+            this.adminRepository = adminRepository;
         }
 
         public IActionResult OnGet()
@@ -31,13 +31,12 @@ namespace CarRentalRazor.Pages.Admins
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Admins == null || Admin == null)
+          if (!ModelState.IsValid || adminRepository == null || Admin == null)
             {
                 return Page();
             }
 
-            _context.Admins.Add(Admin);
-            await _context.SaveChangesAsync();
+            adminRepository.Add(Admin);
 
             return RedirectToPage("./Index");
         }

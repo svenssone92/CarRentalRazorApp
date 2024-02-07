@@ -13,24 +13,24 @@ namespace CarRentalRazor.Pages.Admins
 {
     public class EditModel : PageModel
     {
-        private readonly CarRentalRazor.Data.ApplicationDbContext _context;
+        private readonly IAdmin adminRepository;
 
-        public EditModel(CarRentalRazor.Data.ApplicationDbContext context)
+        public EditModel(IAdmin adminRepository)
         {
-            _context = context;
+            this.adminRepository = adminRepository;
         }
 
         [BindProperty]
         public Admin Admin { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null || _context.Admins == null)
+            if (adminRepository == null)
             {
                 return NotFound();
             }
 
-            var admin =  await _context.Admins.FirstOrDefaultAsync(m => m.Id == id);
+            var admin = adminRepository.GetById(id);
             if (admin == null)
             {
                 return NotFound();
@@ -48,30 +48,9 @@ namespace CarRentalRazor.Pages.Admins
                 return Page();
             }
 
-            _context.Attach(Admin).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AdminExists(Admin.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            adminRepository.Update(Admin);
 
             return RedirectToPage("./Index");
-        }
-
-        private bool AdminExists(int id)
-        {
-          return (_context.Admins?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

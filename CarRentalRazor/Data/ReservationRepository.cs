@@ -10,14 +10,32 @@ namespace CarRentalRazor.Data
             this.applicationDbContext = applicationDbContext;
         }
 
-        public IEnumerable<Reservation> GetAll()
+        public void Add(Reservation reservation)
         {
-            return applicationDbContext.Reservations.OrderBy(x => x.Id);
+            applicationDbContext.Add(reservation);
+            applicationDbContext.SaveChanges();
+        }
+
+        public void Delete(Reservation reservation)
+        {
+            applicationDbContext.Remove(reservation);
+            applicationDbContext.SaveChanges();
+        }
+
+        public IQueryable<Reservation> GetAll()
+        {
+            return applicationDbContext.Reservations.AsQueryable().OrderBy(x => x.Id);
         }
 
         public Reservation GetById(int id)
         {
             return applicationDbContext.Reservations.FirstOrDefault(x => x.Id == id);
+        }
+
+        public void Update(Reservation reservation)
+        {
+            applicationDbContext.Update(reservation);
+            applicationDbContext.SaveChanges();
         }
     }
 }

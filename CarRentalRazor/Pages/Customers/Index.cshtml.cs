@@ -12,20 +12,20 @@ namespace CarRentalRazor.Pages.Customers
 {
     public class IndexModel : PageModel
     {
-        private readonly CarRentalRazor.Data.ApplicationDbContext _context;
+        private readonly ICustomer customerRepository;
 
-        public IndexModel(CarRentalRazor.Data.ApplicationDbContext context)
+        public IndexModel(ICustomer customerRepository)
         {
-            _context = context;
+            this.customerRepository = customerRepository;
         }
 
-        public IList<Customer> Customer { get;set; } = default!;
+        public IEnumerable<Customer> Customer { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            if (_context.Customers != null)
+            if (customerRepository != null)
             {
-                Customer = await _context.Customers.ToListAsync();
+                Customer = customerRepository.GetAll();
             }
         }
     }

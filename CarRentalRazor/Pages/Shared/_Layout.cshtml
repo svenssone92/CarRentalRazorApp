@@ -1,10 +1,14 @@
-﻿<!DOCTYPE html>
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    var httpContext = HttpContextAccessor.HttpContext;
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - CarRentalRazor</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/CarRentalRazor.styles.css" asp-append-version="true" />
 </head>
@@ -26,31 +30,37 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Cars/Index">Cars</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/UserManager/RentalCars">Rental Cars</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Reservations/Index">Reservations</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Customers/Index">Customers</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Admins/Index">Admins</a>
-                        </li>
-                        @if (UserManager.ActiveUser.customer == null)
+                        @if (!SessionControl.IsCustomer(httpContext.Session) && !SessionControl.IsAdmin(httpContext.Session))
                         {
                             <li class="nav-item ms-auto">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/UserManager/SignIn">Sign In</a>
                             </li>
                         }
-                        else
+                        else if (SessionControl.IsCustomer(httpContext.Session))
+                        {
+                            <li class="nav-item ms-auto">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/UserManager/Profile">@httpContext.Session.GetString("CustomerFirstName")[0] @httpContext.Session.GetString("CustomerLastName")[0]</a>
+                            </li>
+                        }
+                        else if (SessionControl.IsAdmin(httpContext.Session))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/UserManager/RentalCars">Rental Cars</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Cars/Index">Cars</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Reservations/Index">Reservations</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Customers/Index">Customers</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Admins/Index">Admins</a>
                             </li>
 
                             <li class="nav-item ms-auto">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/UserManager/Profile">@UserManager.ActiveUser.customer.FirstName</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/AdminManager/Profile">Admin</a>
                             </li>
                         }
                     </ul>
@@ -71,7 +81,6 @@
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)

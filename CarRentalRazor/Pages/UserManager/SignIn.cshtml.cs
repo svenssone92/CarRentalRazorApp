@@ -13,32 +13,49 @@ namespace CarRentalRazor.Pages.UserManager
 {
     public class IndexModel : PageModel
     {
-        private readonly CarRentalRazor.Data.ApplicationDbContext _context;
+        private readonly ICustomer customerRepository;
 
-        public IndexModel(CarRentalRazor.Data.ApplicationDbContext context)
+        public IndexModel(ICustomer customerRepository)
         {
-            _context = context;
+            this.customerRepository = customerRepository;
         }
 
         [BindProperty]
         public Customer Customer { get; set; } = default!;
 
+        public int CarId { get; set; } = -1;
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            //saves the cars Id while customer signs in, if they wanted to make a reservation. 
+            TempData["CarId"] = -1;
+            if (id != null)
+            {
+                CarId = (int)id;
+                TempData["CarId"] = CarId;
+            }
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(Customer customer)
         {
-            var customers = _context.Customers;
+            var customers = customerRepository.GetAll();
+
+            CarId = (int)TempData["CarId"];
 
             var matchingCustomer = customers.FirstOrDefault(a => a.Email == customer.Email);
 
             if (matchingCustomer != null && matchingCustomer.Password == customer.Password)
             {
-                ActiveUser.customer = matchingCustomer;
+                SessionControl.RemoveAdminData(HttpContext.Session);
+                SessionControl.SetCustomerData(HttpContext.Session, matchingCustomer);
 
-                return RedirectToPage("../Index");
+                if(CarId != -1)
+                {
+                    return RedirectToPage("./Reservations", new { id = CarId });
+                }
+
+                return RedirectToPage("./SignInSuccess");
             }
 
 

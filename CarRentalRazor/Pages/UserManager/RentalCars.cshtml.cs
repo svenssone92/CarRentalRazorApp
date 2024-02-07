@@ -12,20 +12,20 @@ namespace CarRentalRazor.Pages.UserManager
 {
     public class RentalCarsModel : PageModel
     {
-        private readonly CarRentalRazor.Data.ApplicationDbContext _context;
+        private readonly ICar carRepository;
 
-        public RentalCarsModel(CarRentalRazor.Data.ApplicationDbContext context)
+        public RentalCarsModel(ICar carRepository)
         {
-            _context = context;
+            this.carRepository = carRepository;
         }
 
-        public IList<Car> Car { get;set; } = default!;
+        public IEnumerable<Car> Car { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            if (_context.Cars != null)
+            if (carRepository != null)
             {
-                Car = await _context.Cars.ToListAsync();
+                Car = carRepository.GetAll();
             }
         }
     }

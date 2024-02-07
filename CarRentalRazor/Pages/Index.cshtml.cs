@@ -16,10 +16,6 @@ namespace CarRentalRazor.Pages
 
         public void OnGet()
         {
-            if(ActiveUser.customer != null)
-            {
-            var activeUser=ActiveUser.customer;
-            }
         }
     }
 }

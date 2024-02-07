@@ -12,11 +12,11 @@ namespace CarRentalRazor.Pages.Cars
 {
     public class CreateModel : PageModel
     {
-        private readonly CarRentalRazor.Data.ApplicationDbContext _context;
+        private readonly ICar carRepository;
 
-        public CreateModel(CarRentalRazor.Data.ApplicationDbContext context)
+        public CreateModel(ICar carRepository)
         {
-            _context = context;
+            this.carRepository = carRepository;
         }
 
         public IActionResult OnGet()
@@ -33,13 +33,13 @@ namespace CarRentalRazor.Pages.Cars
         {
             // Exclude specific properties from validation
             ModelState.Remove("Car.Reservations");
-            if (!ModelState.IsValid || _context.Cars == null || Car == null)
+            if (!ModelState.IsValid || carRepository == null || Car == null)
             {
                 return Page();
             }
 
-            _context.Cars.Add(Car);
-            await _context.SaveChangesAsync();
+            carRepository.Add(Car);
+
 
             return RedirectToPage("./Index");
         }

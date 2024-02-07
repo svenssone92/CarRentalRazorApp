@@ -12,24 +12,24 @@ namespace CarRentalRazor.Pages.Customers
 {
     public class DeleteModel : PageModel
     {
-        private readonly CarRentalRazor.Data.ApplicationDbContext _context;
+        private readonly ICustomer customerRepository;
 
-        public DeleteModel(CarRentalRazor.Data.ApplicationDbContext context)
+        public DeleteModel(ICustomer customerRepository)
         {
-            _context = context;
+            this.customerRepository = customerRepository;
         }
 
         [BindProperty]
       public Customer Customer { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null || _context.Customers == null)
+            if (customerRepository == null)
             {
                 return NotFound();
             }
 
-            var customer = await _context.Customers.FirstOrDefaultAsync(m => m.Id == id);
+            var customer = customerRepository.GetById(id);
 
             if (customer == null)
             {
@@ -42,19 +42,19 @@ namespace CarRentalRazor.Pages.Customers
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(int id)
         {
-            if (id == null || _context.Customers == null)
+            if (customerRepository == null)
             {
                 return NotFound();
             }
-            var customer = await _context.Customers.FindAsync(id);
+            var customer = customerRepository.GetById(id);
 
             if (customer != null)
             {
                 Customer = customer;
-                _context.Customers.Remove(Customer);
-                await _context.SaveChangesAsync();
+                customerRepository.Delete(Customer);
+
             }
 
             return RedirectToPage("./Index");

@@ -7,7 +7,8 @@ namespace CarRentalRazor.Models
     {
         public int Id { get; set; }
         public string Model { get; set; }
-        public string PictureString { get; set; }
+        public string? PictureString { get; set; }
+        public decimal Price { get; set; }
         public List<Reservation> Reservations { get; set; }
     }
 }

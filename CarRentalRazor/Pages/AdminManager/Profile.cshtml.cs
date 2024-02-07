@@ -1,7 +1,8 @@
+using CarRentalRazor.Pages.UserManager;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace CarRentalRazor.Pages.UserManager
+namespace CarRentalRazor.Pages.AdminManager
 {
     public class ProfileModel : PageModel
     {
@@ -11,7 +12,7 @@ namespace CarRentalRazor.Pages.UserManager
 
         public IActionResult OnPostSignOut()
         {
-            SessionControl.RemoveCustomerData(HttpContext.Session);
+            SessionControl.RemoveAdminData(HttpContext.Session);
             return RedirectToPage("/Index");
         }
     }

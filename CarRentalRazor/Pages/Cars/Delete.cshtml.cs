@@ -12,24 +12,24 @@ namespace CarRentalRazor.Pages.Cars
 {
     public class DeleteModel : PageModel
     {
-        private readonly CarRentalRazor.Data.ApplicationDbContext _context;
+        private readonly ICar carRepository;
 
-        public DeleteModel(CarRentalRazor.Data.ApplicationDbContext context)
+        public DeleteModel(ICar carRepository)
         {
-            _context = context;
+            this.carRepository = carRepository;
         }
 
         [BindProperty]
       public Car Car { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null || _context.Cars == null)
+            if (carRepository == null)
             {
                 return NotFound();
             }
 
-            var car = await _context.Cars.FirstOrDefaultAsync(m => m.Id == id);
+            var car = carRepository.GetById(id);
 
             if (car == null)
             {
@@ -42,21 +42,20 @@ namespace CarRentalRazor.Pages.Cars
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(int id)
         {
-            if (id == null || _context.Cars == null)
+            if (carRepository == null)
             {
                 return NotFound();
             }
-            var car = await _context.Cars.FindAsync(id);
+            var car = carRepository.GetById(id);
 
             if (car != null)
             {
                 Car = car;
-                _context.Cars.Remove(Car);
-                await _context.SaveChangesAsync();
+                carRepository.Delete(Car);
             }
-
+            
             return RedirectToPage("./Index");
         }
     }

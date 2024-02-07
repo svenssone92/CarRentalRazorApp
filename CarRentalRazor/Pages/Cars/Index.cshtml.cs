@@ -12,20 +12,20 @@ namespace CarRentalRazor.Pages.Cars
 {
     public class IndexModel : PageModel
     {
-        private readonly CarRentalRazor.Data.ApplicationDbContext _context;
+        private readonly ICar carRepository;
 
-        public IndexModel(CarRentalRazor.Data.ApplicationDbContext context)
+        public IndexModel(ICar carRepository)
         {
-            _context = context;
+            this.carRepository = carRepository;
         }
 
-        public IList<Car> Car { get;set; } = default!;
+        public IEnumerable<Car> Car { get;set; } = new List<Car>();
 
         public async Task OnGetAsync()
         {
-            if (_context.Cars != null)
+            if (carRepository != null)
             {
-                Car = await _context.Cars.ToListAsync();
+                Car = carRepository.GetAll();
             }
         }
     }

@@ -7,15 +7,12 @@
 <section>
     <h1>Rental Cars</h1>
 
-    <table class="table">
+    <table class="table long">
         <thead>
             <tr>
-                <th>
-                    Model
-                </th>
-                <th>
-                    Picture
-                </th>
+                <th>Model</th>
+                <th>Price/day</th>
+                <th></th>
                 <th></th>
             </tr>
         </thead>
@@ -24,6 +21,9 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Model)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
                 </td>
                 <td>
                         <img src="@item.PictureString" alt="Car Image" height="100">

@@ -49,6 +49,9 @@ namespace CarRentalRazor.Pages.Reservations
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+            //Removes navigation props from validation
+            ModelState.Remove("Reservation.Car");
+            ModelState.Remove("Reservation.Customer");
             if (!ModelState.IsValid)
             {
                 return Page();

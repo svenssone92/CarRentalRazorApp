@@ -19,9 +19,9 @@ namespace CarRentalRazor.Pages.Cars
             this.carRepository = carRepository;
         }
 
-        public Car Car { get; set; } = default!; 
+        public Car Car { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int id)
+        public IActionResult OnGet(int id)
         {
             if (carRepository == null)
             {
@@ -33,7 +33,7 @@ namespace CarRentalRazor.Pages.Cars
             {
                 return NotFound();
             }
-            else 
+            else
             {
                 Car = car;
             }

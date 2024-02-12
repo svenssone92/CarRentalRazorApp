@@ -21,7 +21,7 @@ namespace CarRentalRazor.Pages.Admins
 
         public IEnumerable<Admin> Admin { get;set; } = default!;
 
-        public async Task OnGetAsync()
+        public void OnGet()
         {
             if (adminRepository != null)
             {

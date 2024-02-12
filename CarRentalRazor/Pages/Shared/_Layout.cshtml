@@ -15,15 +15,15 @@
 <body>
     <header>
         <nav>
-            <div class="">
-                <a class="" asp-area="" asp-page="/Index"><img src="~/Images/FribergLogo.png" alt="SiteLogo" width="150" height="150"></a>
-                <ul class="">
+            <div style="max-width: 1000px;">
+                <ul>
+                    <a class="" asp-area="" asp-page="/Index"><img src="~/Images/FribergLogo.png" alt="SiteLogo" width="150" height="150"></a>
                     @if (!SessionControl.IsCustomer(httpContext.Session) && !SessionControl.IsAdmin(httpContext.Session))
                     {
                         <li class="">
                             <a class="" asp-area="" asp-page="/UserManager/RentalCars">Rental Cars</a>
                         </li>
-                        <li style="margin-left: auto;">
+                        <li>
                             <a class="" asp-area="" asp-page="/UserManager/SignIn">Sign In</a>
                         </li>
                     }
@@ -32,7 +32,7 @@
                         <li class="">
                             <a class="" asp-area="" asp-page="/UserManager/RentalCars">Rental Cars</a>
                         </li>
-                        <li style="margin-left: auto;">
+                        <li>
                             <a class="" asp-area="" asp-page="/UserManager/Profile">@httpContext.Session.GetString("CustomerFirstName")[0] @httpContext.Session.GetString("CustomerLastName")[0]</a>
                         </li>
                     }
@@ -50,8 +50,7 @@
                         <li class="">
                             <a class="" asp-area="" asp-page="/Admins/Index">Admins</a>
                         </li>
-
-                        <li style="margin-left: auto;">
+                        <li>
                             <a class="" asp-area="" asp-page="/AdminManager/Profile">@httpContext.Session.GetString("AdminFirstName")[0] @httpContext.Session.GetString("AdminLastName")[0]</a>
                         </li>
                     }

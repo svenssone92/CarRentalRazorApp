@@ -22,7 +22,7 @@ namespace CarRentalRazor.Pages.Cars
         [BindProperty]
       public Car Car { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int id)
+        public IActionResult OnGet(int id)
         {
             if (carRepository == null)
             {
@@ -35,14 +35,14 @@ namespace CarRentalRazor.Pages.Cars
             {
                 return NotFound();
             }
-            else 
+            else
             {
                 Car = car;
             }
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int id)
+        public IActionResult OnPost(int id)
         {
             if (carRepository == null)
             {
@@ -55,7 +55,7 @@ namespace CarRentalRazor.Pages.Cars
                 Car = car;
                 carRepository.Delete(Car);
             }
-            
+
             return RedirectToPage("./Index");
         }
     }

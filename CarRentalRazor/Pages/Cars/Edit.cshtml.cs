@@ -23,7 +23,7 @@ namespace CarRentalRazor.Pages.Cars
         [BindProperty]
         public Car Car { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int id)
+        public IActionResult OnGet(int id)
         {
             if (carRepository == null)
             {
@@ -41,7 +41,7 @@ namespace CarRentalRazor.Pages.Cars
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
             ModelState.Remove("Car.Reservations");
             if (!ModelState.IsValid)

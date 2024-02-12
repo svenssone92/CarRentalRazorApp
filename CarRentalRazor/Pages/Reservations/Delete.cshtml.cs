@@ -22,7 +22,7 @@ namespace CarRentalRazor.Pages.Reservations
         [BindProperty]
       public Reservation Reservation { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int id)
+        public IActionResult OnGet(int id)
         {
             if (reservationRepository == null)
             {
@@ -35,14 +35,14 @@ namespace CarRentalRazor.Pages.Reservations
             {
                 return NotFound();
             }
-            else 
+            else
             {
                 Reservation = reservation;
             }
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int id)
+        public IActionResult OnPost(int id)
         {
             if (reservationRepository == null)
             {

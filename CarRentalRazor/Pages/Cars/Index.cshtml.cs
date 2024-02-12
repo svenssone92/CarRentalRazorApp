@@ -21,7 +21,7 @@ namespace CarRentalRazor.Pages.Cars
 
         public IEnumerable<Car> Car { get;set; } = new List<Car>();
 
-        public async Task OnGetAsync()
+        public void OnGet()
         {
             if (carRepository != null)
             {

@@ -27,7 +27,7 @@ namespace CarRentalRazor.Pages.Reservations
         [BindProperty]
         public Reservation Reservation { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int id)
+        public IActionResult OnGet(int id)
         {
             if (reservationRepository == null)
             {
@@ -40,14 +40,14 @@ namespace CarRentalRazor.Pages.Reservations
                 return NotFound();
             }
             Reservation = reservation;
-           ViewData["CarId"] = new SelectList(carRepository.GetAll(), "Id", "Id");
-           ViewData["CustomerId"] = new SelectList(customerRepository.GetAll(), "Id", "Id");
+            ViewData["CarId"] = new SelectList(carRepository.GetAll(), "Id", "Id");
+            ViewData["CustomerId"] = new SelectList(customerRepository.GetAll(), "Id", "Id");
             return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
             //Removes navigation props from validation
             ModelState.Remove("Reservation.Car");

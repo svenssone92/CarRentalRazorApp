@@ -19,9 +19,9 @@ namespace CarRentalRazor.Pages.Reservations
             this.reservationRepository = reservationRepository;
         }
 
-        public Reservation Reservation { get; set; } = default!; 
+        public Reservation Reservation { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int id)
+        public IActionResult OnGet(int id)
         {
             if (reservationRepository == null)
             {
@@ -33,7 +33,7 @@ namespace CarRentalRazor.Pages.Reservations
             {
                 return NotFound();
             }
-            else 
+            else
             {
                 Reservation = reservation;
             }

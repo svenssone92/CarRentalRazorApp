@@ -22,7 +22,7 @@ namespace CarRentalRazor.Pages.Admins
         [BindProperty]
       public Admin Admin { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int id)
+        public IActionResult OnGet(int id)
         {
             if (adminRepository == null)
             {
@@ -35,14 +35,14 @@ namespace CarRentalRazor.Pages.Admins
             {
                 return NotFound();
             }
-            else 
+            else
             {
                 Admin = admin;
             }
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int id)
+        public IActionResult OnPost(int id)
         {
             if (adminRepository == null)
             {

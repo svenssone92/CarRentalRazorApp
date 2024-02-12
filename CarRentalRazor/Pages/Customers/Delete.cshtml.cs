@@ -22,7 +22,7 @@ namespace CarRentalRazor.Pages.Customers
         [BindProperty]
       public Customer Customer { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int id)
+        public IActionResult OnGet(int id)
         {
             if (customerRepository == null)
             {
@@ -35,14 +35,14 @@ namespace CarRentalRazor.Pages.Customers
             {
                 return NotFound();
             }
-            else 
+            else
             {
                 Customer = customer;
             }
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int id)
+        public IActionResult OnPost(int id)
         {
             if (customerRepository == null)
             {

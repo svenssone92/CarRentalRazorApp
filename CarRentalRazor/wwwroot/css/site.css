@@ -1,30 +1,7 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-  margin-bottom: 60px;
-}
-
 :root {
     --bg-color: #e8dbd6;
 
-    --blue1: #d6dfe1;
+    --blue1: #d6dfe1fc;
     --blue2: #bfd1d4;
     --blue3: #648890;
     --blue4: #4d666b;
@@ -44,6 +21,25 @@ body {
     --red2: #BD5E5A;
     --red3: #612522;
 }
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
 
 header {
     padding: 1px;
@@ -58,6 +54,7 @@ header h1 {
 
 body {
     margin: 0;
+    margin-bottom: 60px;
     background-color: var(--bg-color);
     font-family: 'Open Sans', sans-serif;
 }
@@ -70,6 +67,7 @@ section {
     margin-bottom: 30px;
     border: 2px solid var(--orange4);
     background-color: var(--blue1);
+    text-align: center;
 }
 
 nav {
@@ -89,9 +87,9 @@ nav ul {
     padding: 3px;
 }
 
-    nav li {
-        display: inline-block;
-    }
+nav li {
+    display: inline-block;
+}
 
 nav li a {
     display: block;
@@ -111,7 +109,6 @@ nav li a:hover {
 
 h1 {
     color: var(--orange4);
-    font-family: 'Press Start 2P', system-ui;
 }
 
 h2 {
@@ -166,6 +163,14 @@ button.negative {
         ;
     }
 
+.form-group {
+    padding: 10px;
+}
+
+.forms-align {
+    text-align: right;
+}
+
 .print-button {
     background-image: url('Images/PrintButton.png');
     background-size: cover;
@@ -186,40 +191,40 @@ button.negative {
 }
 
 
-    .table thead {
-        border-bottom: 1px solid var(--blue4);
-    }
+.table thead {
+    border-bottom: 1px solid var(--blue4);
+}
 
-    .table th {
-        padding-left: 10px;
-        padding-right: 10px;
-        padding-top: 7px;
-        padding-bottom: 7px;
-        background-color: white;
-    }
+.table th {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    background-color: white;
+}
 
-    .table td {
-        padding-top: 5px;
-        padding-bottom: 5px;
-        padding-left: 20px;
-        padding-right: 20px;
-    }
+.table td {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
 
-    .table.long td:nth-child(even) {
-        background-color: var(--blue1);
-    }
+.table.long td:nth-child(even) {
+    background-color: var(--blue1);
+}
 
-    .table.long td:nth-child(odd) {
-        background-color: white;
-    }
+.table.long td:nth-child(odd) {
+    background-color: white;
+}
 
-    .table.wide tr:nth-child(even) {
-        background-color: white;
-    }
+.table.wide tr:nth-child(even) {
+    background-color: white;
+}
 
-    .table.wide tr:nth-child(odd) {
-        background-color: var(--blue1);
-    }
+.table.wide tr:nth-child(odd) {
+    background-color: var(--blue1);
+}
 
 .normal-message {
     background-color: var(--blue2);

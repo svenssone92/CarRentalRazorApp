@@ -21,7 +21,7 @@ namespace CarRentalRazor.Pages.Customers
 
         public IEnumerable<Customer> Customer { get;set; } = default!;
 
-        public async Task OnGetAsync()
+        public void OnGet()
         {
             if (customerRepository != null)
             {

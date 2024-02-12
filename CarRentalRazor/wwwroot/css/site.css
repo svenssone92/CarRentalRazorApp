@@ -79,12 +79,19 @@ nav {
     box-sizing: border-box;
 }
 
+.header-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 nav ul {
     margin: 0;
     list-style-type: none;
     padding: 0;
     overflow: hidden;
-    padding: 3px;
 }
 
 nav li {
@@ -98,8 +105,12 @@ nav li a {
     background-color: white;
     border: 2px solid var(--orange4);
     border-radius: 2px;
-    margin: 2px;
     padding: 10px;
+    height: fit-content;
+}
+
+.sign-in {
+    margin-left: auto;
 }
 
 nav li a:hover {
@@ -141,17 +152,17 @@ button.normal {
     background-color: var(--orange1);
 }
 
-    button.normal:hover {
-        background-color: var(--orange3);
-    }
+button.normal:hover {
+    background-color: var(--orange3);
+}
 
 button.positive {
     background-color: var(--green2);
 }
 
-    button.positive:hover {
-        background-color: var(--green4);
-    }
+button.positive:hover {
+    background-color: var(--green4);
+}
 
 button.negative {
     background-color: var(--red2);

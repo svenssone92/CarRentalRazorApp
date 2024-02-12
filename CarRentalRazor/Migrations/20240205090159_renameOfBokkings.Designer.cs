@@ -13,7 +13,7 @@ namespace CarRentalRazor.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20240205090159_renameOfBokkings")]
-    partial class renameOfBokkings
+    partial class RenameOfBokkings
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -26,7 +26,7 @@ namespace CarRentalRazor.Pages.UserManager
         [BindProperty]
         public Car Car { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int id)
+        public IActionResult OnGet(int id)
         {
             if (reservationRepository == null)
             {
@@ -40,7 +40,7 @@ namespace CarRentalRazor.Pages.UserManager
             {
                 return NotFound();
             }
-            else 
+            else
             {
                 Reservation = reservation;
                 Car = car;
@@ -48,7 +48,7 @@ namespace CarRentalRazor.Pages.UserManager
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int id)
+        public IActionResult OnPost(int id)
         {
             if (reservationRepository == null)
             {

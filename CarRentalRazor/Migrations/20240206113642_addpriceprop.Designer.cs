@@ -13,7 +13,7 @@ namespace CarRentalRazor.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20240206113642_addpriceprop")]
-    partial class addpriceprop
+    partial class AddPriceProp
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

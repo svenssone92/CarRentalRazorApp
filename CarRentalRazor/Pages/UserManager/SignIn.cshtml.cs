@@ -25,7 +25,7 @@ namespace CarRentalRazor.Pages.UserManager
 
         public int CarId { get; set; } = -1;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public IActionResult OnGet(int? id)
         {
             //saves the cars Id while customer signs in, if they wanted to make a reservation. 
             TempData["CarId"] = -1;
@@ -37,7 +37,7 @@ namespace CarRentalRazor.Pages.UserManager
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(Customer customer)
+        public IActionResult OnPost(Customer customer)
         {
             var customers = customerRepository.GetAll();
 
@@ -50,7 +50,7 @@ namespace CarRentalRazor.Pages.UserManager
                 SessionControl.RemoveAdminData(HttpContext.Session);
                 SessionControl.SetCustomerData(HttpContext.Session, matchingCustomer);
 
-                if(CarId != -1)
+                if (CarId != -1)
                 {
                     return RedirectToPage("./Reservations", new { id = CarId });
                 }

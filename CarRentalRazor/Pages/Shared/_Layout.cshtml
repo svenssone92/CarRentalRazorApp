@@ -15,7 +15,7 @@
 <body>
     <header>
         <nav>
-            <div style="max-width: 1000px;">
+            <div class="header-container">
                 <ul>
                     <a class="" asp-area="" asp-page="/Index"><img src="~/Images/FribergLogo.png" alt="SiteLogo" width="150" height="150"></a>
                     @if (!SessionControl.IsCustomer(httpContext.Session) && !SessionControl.IsAdmin(httpContext.Session))

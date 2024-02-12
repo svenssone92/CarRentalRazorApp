@@ -21,7 +21,7 @@ namespace CarRentalRazor.Pages.UserManager
 
         public IList<Reservation> Reservation { get;set; } = default!;
 
-        public async Task OnGetAsync()
+        public void OnGet()
         {
             if (reservationRepository != null)
             {

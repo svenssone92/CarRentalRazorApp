@@ -21,7 +21,7 @@ namespace CarRentalRazor.Pages.UserManager
 
         public IEnumerable<Car> Car { get;set; } = default!;
 
-        public async Task OnGetAsync()
+        public void OnGet()
         {
             if (carRepository != null)
             {

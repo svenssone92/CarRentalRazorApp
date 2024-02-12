@@ -5,7 +5,7 @@
 namespace CarRentalRazor.Migrations
 {
     /// <inheritdoc />
-    public partial class renameOfBokkings : Migration
+    public partial class RenameOfBokkings : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

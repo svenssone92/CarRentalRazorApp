@@ -5,7 +5,7 @@
 namespace CarRentalRazor.Migrations
 {
     /// <inheritdoc />
-    public partial class addpriceprop : Migration
+    public partial class AddPriceProp : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

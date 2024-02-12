@@ -44,10 +44,10 @@ namespace CarRentalRazor.Pages.UserManager
 
         [BindProperty]
         public Reservation Reservation { get; set; } = default!;
-        
+
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
             //Removes navigation properties for Vaildation
             ModelState.Remove("Reservation.Car");

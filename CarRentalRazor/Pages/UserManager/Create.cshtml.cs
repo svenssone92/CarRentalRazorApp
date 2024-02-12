@@ -26,10 +26,10 @@ namespace CarRentalRazor.Pages.UserManager
 
         [BindProperty]
         public Customer Customer { get; set; } = default!;
-        
+
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
             // Exclude specific properties from validation
             ModelState.Remove("Customer.Reservations");
